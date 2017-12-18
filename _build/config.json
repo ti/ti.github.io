@@ -1,0 +1,13 @@
+{
+  "Watch": false,
+  "Server":true,
+  "BasePath": "https://nanxi.li/",
+  "SrcDir": "../",
+  "OutputType": "json",
+  "SiteMapDeep": 2,
+  "DistDir": "",
+  "NoLogging": false,
+  "NoIndex": false,
+  "NoSiteMap": false,
+  "ServerAddr":":9527"
+}
