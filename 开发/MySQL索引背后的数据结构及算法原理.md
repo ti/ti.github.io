@@ -3,6 +3,7 @@ tags: [mysql, 算法]
 date: 2011-10-18
 author: 张洋
 author_link: http://blog.codinglabs.org/articles/theory-of-mysql-index.html
+picture: img/mysql.jpg
 ---
 
 ## MySQL索引背后的数据结构及算法原理

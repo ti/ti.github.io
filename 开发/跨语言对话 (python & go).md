@@ -1,6 +1,7 @@
 ---
 date: 2016-12-01
 tags: [编译,跨平台]
+picture: img/covers/gears.jpg
 ---
 
 # 跨语言对话 (python & go)

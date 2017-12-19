@@ -1,6 +1,7 @@
 ---
 tags: [程序, 12因子]
-date: 2014-02-01 
+date: 2014-02-01
+picture: img/covers/fractal.jpg
 ---
 
 # 十二因子应用程式

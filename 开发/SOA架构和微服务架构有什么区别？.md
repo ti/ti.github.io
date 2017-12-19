@@ -2,6 +2,7 @@
 picture: /开发/img/soa_ms.png
 tags: [微服务, 架构, SOA]
 date: 2016-07-27
+picture: img/covers/battle.jpg
 ---
 
 # SOA架构和微服务架构有什么区别？

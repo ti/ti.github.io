@@ -3,6 +3,7 @@ author: Winwill
 author_url: http://qifuguang.me/
 tags: [redis]
 date: 2015-01-28
+picture: img/covers/juery.jpg
 ---
 # Redis事务介绍
 

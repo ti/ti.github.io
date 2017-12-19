@@ -4,8 +4,9 @@ tags: [golang]
 github: https://github.com/ti/nasync
 link: https://github.com/ti/nasync
 date: 2016-02-04
+picture: img/number.jpg
 ---
-# NASYNC 
+# NASYNC 可自定义容量的异步库
 
 a customizable async task pool for golang, (event bus, runtime)
 
