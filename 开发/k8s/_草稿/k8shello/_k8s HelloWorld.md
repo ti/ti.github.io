@@ -54,7 +54,11 @@ CMD ["/app/main"]
 ```
 
 ```
- docker build -t linx/test .
+
+   docker build -t  linx/greeter-srv:centos .
+   
+   
+   docker build -t linx/test .
  
   docker images
   
@@ -113,6 +117,46 @@ Events:
 ```
 
 
+Docker 离线转发
+
+
+
+```
+ sudo yum install -y yum-utils   device-mapper-persistent-data   lvm2
+  sudo yum-config-manager --add-repo  https://download.docker.com/linux/centos/docker-ce.repo
+  sudo yum-config-manager --enable docker-ce-edge
+  sudo yum install docker-ce
+  systemctl start docker
+  docker run -d -p 5000:5000 --name registry registry:2
+  ​
+  docker pull gcr.io/google_containers/kubernetes-dashboard-init-amd64:v1.0.1
+  docker pull gcr.io/google_containers/kubernetes-dashboard-amd64:v1.7.1
+  ​
+  ​
+  docker tag gcr.io/google_containers/kubernetes-dashboard-amd64:v1.7.1 localhost:5000/google_containers/kubernetes-dashboard-amd64:v1.7.1
+  
+  docker push localhost:5000/google_containers/kubernetes-dashboard-amd64:v1.7.1
+  ​
+  docker tag gcr.io/google_containers/kubernetes-dashboard-init-amd64:v1.0.1 localhost:5000/google_containers/kubernetes-dashboard-init-amd64:v1.0.1
+  docker push localhost:5000/google_containers/kubernetes-dashboard-init-amd64:v1.0.1
+  
+  ​
+  ## 在自己电脑上:
+  ​
+  docker pull us.lnx.cm/google_containers/kubernetes-dashboard-init-amd64:v1.0.1
+  ​
+  docker pull us.lnx.cm/google_containers/kubernetes-dashboard-amd64:v1.7.1
+保存
+
+  docker images
+  cd ~/
+  docker save -o kubernetes-dashboard-init-amd64.tar us.lnx.cm/google_containers/kubernetes-dashboard-init-amd64
+  #scp kubernetes-dashboard-init-amd64.tar  node02:~
+  ssh root@node2
+  docker load -i kubernetes-dashboard-init-amd64.tar
+  docker images
+  ​
+```
 
 视频中的命令：
 
@@ -133,7 +177,14 @@ kubectl get nodes
 
 # 注意：执行下面命令之前确保docker 已经pull 了 nginx:1.7.9或已翻墙。 否则 墙很高
 
+
+
 #启动一个 名称为 ngnix 的 depolyment （部署）
+
+
+
+kubectl run nginx --image=nginx:stable
+
 kubectl run nginx --image=nginx:1.9.1
 
 # kubectl get 资源类型 + 名称
@@ -170,6 +221,15 @@ kubectl logs nginx-665ff4c6f7-plkbc
 
 kubectl exec -it  nginx-cfc4fd5c6-6sz9v /bin/bash
 ```
+
+文件拷贝：
+ docker ps | grep nginx
+ 
+  从docker 拷贝到 宿主机， docker cp c99a51ed4bab:/root/file.txt ./
+  
+  
+  从宿主机拷贝到 docker docker cp file.txt c99a51ed4bab:/root/
+  
 
 
 
