@@ -55,7 +55,7 @@ CMD ["/app/main"]
 
 ```
 
-   docker build -t  linx/greeter-srv:centos .
+   docker build -t  linx/greeter-srv:static .
    
    
    docker build -t linx/test .
@@ -212,6 +212,11 @@ kubectl get ReplicaSet
  
  可以查看运行在那个节点上
  kubectl get pod nginx-665ff4c6f7-plkbc -o wide
+ 
+ 
+ 
+ // 如果出现CrashLoopBackOff， 也可以查看日志
+ 
 
  就可以查看日志
  
