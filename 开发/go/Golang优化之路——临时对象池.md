@@ -3,7 +3,7 @@ tags: [go, 代码调优]
 date: 2018-04-18
 author: Cyeam
 author_link: http://blog.cyeam.com/golang/2017/02/08/go-optimize-slice-pool
-author_avatar: http://blog.cyeam.com/assets/images/logo.jpg
+author_avatar: https://blog.cyeam.com/assets/images/logo.jpg
 ---
 
 
