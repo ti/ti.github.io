@@ -1,7 +1,7 @@
 
 
 
-helm init --upgrade -i gcr.io/kubernetes-helm/tiller:v2.7.2 
+helm init --upgrade -i gcr.io/kubernetes-helm/tiller:v2.9.1 
 
 
 

@@ -70,8 +70,7 @@ CMD ["/app/main"]
   
   进入容器
   docker exec -it  344a22aae2fb /bin/bash
-  
-  
+ 
   
   
   #保存
@@ -85,35 +84,7 @@ CMD ["/app/main"]
 
 
 ```
-Name:                   nginx
-Namespace:              default
-CreationTimestamp:      Sat, 11 Nov 2017 18:03:08 +0800
-Labels:                 run=nginx
-Annotations:            deployment.kubernetes.io/revision=1
-Selector:               run=nginx
-Replicas:               1 desired | 1 updated | 1 total | 1 available | 0 unavailable
-StrategyType:           RollingUpdate
-MinReadySeconds:        0
-RollingUpdateStrategy:  1 max unavailable, 1 max surge
-Pod Template:
-  Labels:  run=nginx
-  Containers:
-   nginx:
-    Image:        nginx:1.7.9
-    Port:         <none>
-    Environment:  <none>
-    Mounts:       <none>
-  Volumes:        <none>
-Conditions:
-  Type           Status  Reason
-  ----           ------  ------
-  Available      True    MinimumReplicasAvailable
-OldReplicaSets:  <none>
-NewReplicaSet:   nginx-665ff4c6f7 (1/1 replicas created)
-Events:
-  Type    Reason             Age   From                   Message
-  ----    ------             ----  ----                   -------
-  Normal  ScalingReplicaSet  26m   deployment-controller  Scaled up replica set nginx-665ff4c6f7 to 1
+
 ```
 
 
@@ -225,16 +196,29 @@ kubectl logs nginx-665ff4c6f7-plkbc
 进入  pod （和docker类似）
 
 kubectl exec -it  nginx-cfc4fd5c6-6sz9v /bin/bash
+
+
+kubectl create serviceaccount --namespace kube-system tiller
+kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
 ```
 
 文件拷贝：
  docker ps | grep nginx
- 
+
   从docker 拷贝到 宿主机， docker cp c99a51ed4bab:/root/file.txt ./
-  
-  
+
   从宿主机拷贝到 docker docker cp file.txt c99a51ed4bab:/root/
-  
+
+
+
+
+
+```
+kubectl delete deployment tiller-deploy --namespace kube-system
+helm init --upgrade --service-account default
+```
+
 
 
 
@@ -630,3 +614,243 @@ docker load -i kubernetes-dashboard-init-amd64.tar
 docker images
 
 ```
+
+
+
+# k8s
+
+
+
+```
+cfssl gencert \
+  -ca=etcd-ca.pem \
+  -ca-key=etcd-ca-key.pem \
+  -config=ca-config.json \
+  -hostname=127.0.0.1,localhost,k8s-m1,k8s-m2,k8s-m3,k8s-m4,k8s-m5,k8s-m6,k8s-m7,k8s-m8,k8s-m9 \
+  -profile=kubernetes \
+  etcd-csr.json | cfssljson -bare etcd
+```
+
+
+
+```
+cfssl gencert \
+  -ca=ca.pem \
+  -ca-key=ca-key.pem \
+  -config=ca-config.json \
+  -hostname=10.96.0.1,k8s-m,127.0.0.1,kubernetes.default \
+  -profile=kubernetes \
+  apiserver-csr.json | cfssljson -bare apiserver
+```
+
+
+
+```
+cfssl gencert \
+  -ca=front-proxy-ca.pem \
+  -ca-key=front-proxy-ca-key.pem \
+  -config=ca-config.json \
+  -profile=kubernetes \
+  front-proxy-client-csr.json | cfssljson -bare front-proxy-client
+```
+
+
+
+```
+cfssl gencert \
+  -ca=ca.pem \
+  -ca-key=ca-key.pem \
+  -config=ca-config.json \
+  -profile=kubernetes \
+  admin-csr.json | cfssljson -bare admin
+```
+
+
+
+```
+kubectl config set-cluster kubernetes \
+    --certificate-authority=ca.pem \
+    --embed-certs=true \
+    --server=${KUBE_APISERVER} \
+    --kubeconfig=../admin.conf
+```
+
+
+
+```
+kubectl config set-credentials kubernetes-admin \
+    --client-certificate=admin.pem \
+    --client-key=admin-key.pem \
+    --embed-certs=true \
+    --kubeconfig=../admin.conf
+```
+
+
+
+```
+kubectl config set-context kubernetes-admin@kubernetes \
+    --cluster=kubernetes \
+    --user=kubernetes-admin \
+    --kubeconfig=../admin.conf
+```
+
+
+
+```
+cfssl gencert \
+  -ca=ca.pem \
+  -ca-key=ca-key.pem \
+  -config=ca-config.json \
+  -profile=kubernetes \
+  manager-csr.json | cfssljson -bare controller-manager
+```
+
+
+
+```
+
+```
+
+
+
+```
+# controller-manager set cluster
+
+$ kubectl config set-cluster kubernetes \
+    --certificate-authority=ca.pem \
+    --embed-certs=true \
+    --server=${KUBE_APISERVER} \
+    --kubeconfig=../controller-manager.conf
+
+# controller-manager set credentials
+
+$ kubectl config set-credentials system:kube-controller-manager \
+    --client-certificate=controller-manager.pem \
+    --client-key=controller-manager-key.pem \
+    --embed-certs=true \
+    --kubeconfig=../controller-manager.conf
+
+# controller-manager set context
+
+kubectl config set-context system:kube-controller-manager@kubernetes \
+    --cluster=kubernetes \
+    --user=system:kube-controller-manager \
+    --kubeconfig=../controller-manager.conf
+
+# controller-manager set default context
+
+kubectl config use-context system:kube-controller-manager@kubernetes \
+    --kubeconfig=../controller-manager.conf
+```
+
+
+
+
+
+```
+$ wget "${PKI_URL}/scheduler-csr.json"
+
+$ cfssl gencert \
+  -ca=ca.pem \
+  -ca-key=ca-key.pem \
+  -config=ca-config.json \
+  -profile=kubernetes \
+  scheduler-csr.json | cfssljson -bare scheduler
+
+
+
+$ ls scheduler*.pem
+
+scheduler-key.pem  scheduler.pem
+```
+
+
+
+
+
+```
+# scheduler set cluster
+
+$ kubectl config set-cluster kubernetes \
+    --certificate-authority=ca.pem \
+    --embed-certs=true \
+    --server=${KUBE_APISERVER} \
+    --kubeconfig=../scheduler.conf
+
+# scheduler set credentials
+
+kubectl config set-credentials system:kube-scheduler \
+    --client-certificate=scheduler.pem \
+    --client-key=scheduler-key.pem \
+    --embed-certs=true \
+    --kubeconfig=../scheduler.conf
+
+# scheduler set context
+
+kubectl config set-context system:kube-scheduler@kubernetes \
+    --cluster=kubernetes \
+    --user=system:kube-scheduler \
+    --kubeconfig=../scheduler.conf
+
+# scheduler use default context
+
+kubectl config use-context system:kube-scheduler@kubernetes \
+    --kubeconfig=../scheduler.conf
+```
+
+
+
+
+
+```
+$ wget "${PKI_URL}/kubelet-csr.json"
+
+$ for NODE in k8s-m1 k8s-m2 k8s-m3; do
+    echo "--- $NODE ---"
+    cp kubelet-csr.json kubelet-$NODE-csr.json;
+    sed -i "s/\$NODE/$NODE/g" kubelet-$NODE-csr.json;
+    cfssl gencert \
+      -ca=ca.pem \
+      -ca-key=ca-key.pem \
+      -config=ca-config.json \
+      -hostname=$NODE \
+      -profile=kubernetes \
+      kubelet-$NODE-csr.json | cfssljson -bare kubelet-$NODE
+  done
+```
+
+
+
+```
+$ for NODE in k8s-m1 k8s-m2 k8s-m3; do
+    echo "--- $NODE ---"
+    ssh ${NODE} "cd /etc/kubernetes/pki && \
+      kubectl config set-cluster kubernetes \
+        --certificate-authority=ca.pem \
+        --embed-certs=true \
+        --server=${KUBE_APISERVER} \
+        --kubeconfig=../kubelet.conf && \
+
+      kubectl config set-cluster kubernetes \
+        --certificate-authority=ca.pem \
+        --embed-certs=true \
+        --server=${KUBE_APISERVER} \
+        --kubeconfig=../kubelet.conf && \
+
+      kubectl config set-credentials system:node:${NODE} \
+        --client-certificate=kubelet-${NODE}.pem \
+        --client-key=kubelet-${NODE}-key.pem \
+        --embed-certs=true \
+        --kubeconfig=../kubelet.conf && \
+
+      kubectl config set-context system:node:${NODE}@kubernetes \
+        --cluster=kubernetes \
+        --user=system:node:${NODE} \
+        --kubeconfig=../kubelet.conf && \
+
+      kubectl config use-context system:node:${NODE}@kubernetes \
+        --kubeconfig=../kubelet.conf && \
+      rm kubelet-${NODE}.pem kubelet-${NODE}-key.pem"
+  done
+```
+
