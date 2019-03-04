@@ -13,7 +13,7 @@ Markdown 在我们应用日常使用中基本上已经替代其他文本工具�
 * [头脑风暴](#头脑风暴)
 * [会议记录](#会议记录)
 * [项目计划](#项目计划)
-* [RestAPI文档](#RestAPI文档)
+* [RestAPI文档](#restapi文档)
 
 最后，附上英文文档源码
 
@@ -275,9 +275,9 @@ https://apis.example.com/v1/example
 
 **Response Payload** 
 
-| Property Name | Type   | Description    |
-| ------------- | ------ | --------------------  ---- |
-| id            | string | the id of the server |
+| Property Name | Type   | Description                 |
+| ------------- | ------ | --------------------------- |
+| id            | string | the id of the server        |
 | name          | string  | the name of this model     |
 | admin         | boolean | Whether the model is admin |
 
