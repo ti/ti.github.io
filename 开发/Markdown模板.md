@@ -1,3 +1,9 @@
+---
+picture: assets/dropbox_geoblast.jpg
+tags: [Markdown, 模板]
+date: 2019-03-05
+---
+
 # 分享几个常用的 Markdown 模板
 
 Markdown 在我们应用日常使用中基本上已经替代其他文本工具了, 但是和其他文本编辑器不同的是, 没有太多新建项目模板, 前几天看到[Dropbox Paper](https://www.dropbox.com/paper)上面的几个 Markdown 模板,做的很不错，　我将其整理下来，　并附上常用的几个Markdown分档分享． 
@@ -133,7 +139,7 @@ Markdown 在我们应用日常使用中基本上已经替代其他文本工具�
 
 ## 时间线
 
-| 标题 | 日期       | 已指派给 | 说明 |
+| 标题 | 日期(Deadline) | 已指派给 | 说明 |
 | --- | :---------: | ------- | --- |
 |     | 03.01-03.12 |         |     |
 
