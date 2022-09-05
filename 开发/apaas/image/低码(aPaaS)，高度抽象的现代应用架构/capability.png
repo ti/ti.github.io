@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en" class="notranslate" translate="no">
+<head>
+    <meta name="google" content="notranslate"/>
+    <meta http-equiv="pragram" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-cache, must-revalidate"/>
+    <meta http-equiv="expires" content="0"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=10"/>
+    <meta name=viewport content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <base href="/"/>
+    <link rel="shortcut icon" href="./assets/public/images/favicon.ico?v=2020">
+    <link rel="stylesheet" type="text/css" href="./assets/public/styles/common.css?v=VE9GNC1BdXRoLVYxLjMwLjBfZjYyNWFmZWYxMWZhNDFmZjMxYmZjMGM0M2E1NTVjODVmMTEyNzNlNw">
+    <link rel="stylesheet" type="text/css" href="./assets/public/styles/RIO_style.css?v=VE9GNC1BdXRoLVYxLjMwLjBfZjYyNWFmZWYxMWZhNDFmZjMxYmZjMGM0M2E1NTVjODVmMTEyNzNlNw">
+    <link rel="stylesheet" type="text/css" href="./assets/public/styles/login.2016.css?v=VE9GNC1BdXRoLVYxLjMwLjBfZjYyNWFmZWYxMWZhNDFmZjMxYmZjMGM0M2E1NTVjODVmMTEyNzNlNw">
+    
+    <title>OA登录</title>
+    <script type="text/javascript">
+        var pageCfg = {
+            loginMethod:  3 ,
+            captchaAppId: "2050147878",
+            isShowCaptcha:  false ,
+            maxFailedAttempt:  3 ,
+            error:  null ,
+            smsGuid:  null ,
+            accountName:  null ,
+            deviceType: "DeviceComputer",
+            isInternetLogin:  false ,
+        };
+
+        if (pageCfg.deviceType == 'DevicePhone') {
+            document.documentElement.classList.add("is-mobile");
+        }
+    </script>
+    
+
+    <script type="text/javascript" src="./assets/public/js/vue.min.js"></script>
+    <script type="text/javascript" src="./assets/public/js/vue-i18n.min.js"></script>
+    <script type="text/javascript" src="./assets/public/js/locales.js?v=VE9GNC1BdXRoLVYxLjMwLjBfZjYyNWFmZWYxMWZhNDFmZjMxYmZjMGM0M2E1NTVjODVmMTEyNzNlNw"></script>
+    <script type="text/javascript">function IEVersion() {
+        var userAgent = navigator.userAgent; 
+        var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1; 
+        var isEdge = userAgent.indexOf("Edge") > -1 && !isIE; 
+        var isIE11 = userAgent.indexOf('Trident') > -1 && userAgent.indexOf("rv:11.0") > -1;
+        if(isIE) {
+            var reIE = new RegExp("MSIE (\\d+\\.\\d+);");
+            reIE.test(userAgent);
+            var fIEVersion = parseFloat(RegExp["$1"]);
+            if(fIEVersion == 7) {
+                return 7;
+            } else if(fIEVersion == 8) {
+                return 8;
+            } else if(fIEVersion == 9) {
+                return 9;
+            } else if(fIEVersion == 10) {
+                return 10;
+            } else {
+                return 6;
+            }
+        } else if(isEdge) {
+            return 'edge';
+        } else if(isIE11) {
+            return 11; 
+        }else{
+            return -1;
+        }
+      }
+      var ie = IEVersion();
+      if (ie>0 && ie < 10) {
+        alert('系统检测到您的浏览器版本过低，影响使用体验，推荐使用IE11以上、Chrome、QQ浏览器以获得最佳体验')
+      }
+
+      function wrapStorage(storageName) {
+            var store = {};
+            ['getItem', 'setItem', 'removeItem', 'clear'].forEach(function (key) {
+                store[key] = function () {
+                    try {
+                        return window[storageName][key].apply(window[storageName], arguments);
+                    } catch (err) {
+                        console.log(storageName + '.' + key + ' failed:', err);
+                    }
+                    return undefined;
+                }
+            })
+            return store;
+        }
+        var Storage = {
+            sessionStorage: wrapStorage('sessionStorage'),
+            localStorage: wrapStorage('localStorage'),
+        };
+        Vue.filter('xss', function(input){
+           return input
+                
+                .replace(/<(?!\/?a).*?>/g, '')
+                
+                .replace(/\son\w+=[^\s>]+/g, '')
+        })
+    </script>
+</head>
+<body>
+<noscript><strong>很抱歉，网站不能正常加载，请启用JavaScript后继续。</strong></noscript>
+<div id="app">
+    <div class="layout">
+        
+        
+        
+        
+        
+        <div class="banner_wrap" v-cloak  v-if="window.pageCfg.deviceType != 'DevicePhone' && !isInternetLogin">
+            
+                <div class="rtx_top">
+                    <div class="rtx_top_banner">
+                        <a><img src="./assets/public/images/top_banner.jpg" alt=""/></a>
+                    </div>
+                </div>
+            
+        </div>
+
+        <div v-cloak v-if="isShowNotice" @click="isShowNotice = false" class="notice-box">
+            <div class="notice-body">
+                <svg class="notice-icon" id="t-icon-info-circle" viewBox="0 0 1024 1024"><path fill-opacity=".9" fill-rule="evenodd" d="M512 96c229.75 0 416 186.25 416 416S741.75 928 512 928 96 741.75 96 512 282.25 96 512 96zm0 64c-194.404 0-352 157.596-352 352s157.596 352 352 352 352-157.596 352-352-157.596-352-352-352zm32 256v256h64v64H480V480h-64v-64h128zm0-128v64h-64v-64h64z"></path></svg>
+                
+                <span style="margin-right: 10px;" v-html="$options.filters.xss($t('sensitiveNotice'))"></span>
+                
+                <svg class="notice-icon notice-icon-close" id="t-icon-close" viewBox="0 0 1024 1024"><path fill-opacity=".9" fill-rule="evenodd" d="M760.978 217.6l45.255 45.255-248.921 248.889 248.92 248.914-45.254 45.255-248.914-248.921-248.89 248.92-45.254-45.254 248.896-248.914-248.896-248.89 45.255-45.254 248.889 248.896L760.978 217.6z"></path></svg>
+            </div>
+        </div>
+
+        
+    <div class="login_wrap" v-cloak>
+    <div class="login_title">
+        <h1 class="title">
+            Tencent 腾讯 企业门户
+            <img src="./assets/public/images/tencent.svg" alt="Tencent 腾讯 企业门户" />
+        </h1>
+        <div class="locale-changer">
+            <span @click="toggleLang('zh')" v-show="lang !== 'zh'">简体中文</span>
+            <span @click="toggleLang('en')" v-show="lang !== 'en'">English</span>
+        </div>
+    </div>
+    <br/>
+    
+    <form id="login-form" action="./modules/passport/signin.ashx?appkey=tgit&amp;oauth=true&amp;url=https%3A%2F%2Fgit.woa.com%2Fusers%2Fauth%2Ftof" method="POST">
+        <input type="hidden" id="crypto_pk" value="LS0tLS1CRUdJTiBSU0EgUFVCTElDIEtFWS0tLS0tCk1JSUJJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBUThBTUlJQkNnS0NBUUVBd2NESmR3ejREWkcyUWVQcmNwSk8KaW1rMmRzVXlGcm55a2hCWWlhaWM4ZVhYYVV5aFNodk9ZNzE1NzR0ZnZTN2FnY1ArTTRqOHlmdGU0RGx6NGgxeApsTlBxdDg0WjQvZ2pWVGljVS9odVd4MlI4QkUweGRSajB3Mkg1VFdQZnI1OWtrVzAvRmwxVVZtbXdnenNWaFYxCjJ1dzFUSnZIdzhSVVBGQkxqd2JsSkZpeEFBUEVmNzloS205Vy8yVE5SQnhRZExYTzRUays3MzlXdWpXaUNTc3IKblVkQzlxb1ZuejlOYnN2UG9ueVRwcUdkcTJZSW50KzZnaG8zOHVqa2ZRRmlFOERyYzZtZ05ReWFMTVp3UzdvUwoxZWJCU29uVktrRFF2ckhtTXBSUlg3ZWxRb1E1OVU0YWRaZkZaVHZQL2ZFWmRmbUl3UWZiZjR5RXlVTkVOZjZDCnp3SURBUUFCCi0tLS0tRU5EIFJTQSBQVUJMSUMgS0VZLS0tLS0K"/>
+        <input type="hidden" id="rsa_pk" value=""/>
+        <input id="crypto_em" name="crypto_em" type="hidden" value="0"/>
+        <input id="login_method" name="login_method" type="hidden" v-model="loginMethod"/>
+        <input id="qrcode_uid" name="qrcode_uid" type="hidden" value="TOF4~eyJpZCI6ImNjYW04dm5zaHB0dTI0YzVjaXUwIiwiaXNzIjoiMTAuOTkuMjA4LjYxIn0"/>
+        <input id="qrcode_content" name="qrcode_content" type="hidden" value="https://qr.oa.tencent.com/login?uid=TOF4~eyJpZCI6ImNjYW04dm5zaHB0dTI0YzVjaXUwIiwiaXNzIjoiMTAuOTkuMjA4LjYxIn0%26host=git.woa.com"/>
+        <input id="challenge" name="challenge" type="hidden" value=""/>
+        <input id="lang" name="lang" type="hidden" v-model="lang"/>
+        
+        <div class="login_area_outer login_con_normal" v-show="loginMethod !== 5">
+            <div class="login_form">
+                <div class="log_main">
+
+                   <div class="login-wrap" v-if="loginMethod === 2">
+                        
+                        <div class="log_ui logTool">
+                            <div class="dsib log_tool_outer vm">
+                                <input class="txt username vm" type="hidden" id="userNameInp_encrypted" v-model="accountName"
+                                    name="account_name"/>
+                                <input class="txt username vm" type="text" id="userNameInp" :placeholder="$t('英文 ID')"
+                                    v-model="accountName" tabindex="1"/>
+                            </div>
+                        </div>
+                        
+                        <div class="log_ui logPass">
+                            <div class="dsib log_tool_outer vm">
+                                <label class="txt_default" for="upass" id="label_upass"
+                                    default_txt="请输入您的密码"></label>
+                                <input class="txt userPass" type="hidden" id="passWordInp_encrypted"
+                                    name="password"/>
+                                <input class="txt userPass" type="password" id="passWordInp"
+                                    value=""
+                                    :placeholder="$t('Outlook 密码')"
+                                    tabindex="2"/>
+                            </div>
+                        </div>
+                   </div>
+
+                   <div class="login-wrap" v-if="loginMethod === 3">
+                        
+                        <div class="log_ui logTool">
+                            <div class="dsib log_tool_outer vm">
+                                <input class="txt username vm" type="hidden" id="userNameInp_encrypted" v-model="accountName"
+                                    name="account_name"/>
+                                <input class="txt username vm" type="text" id="userNameInp" :placeholder="$t('英文 ID')"
+                                    v-model="accountName"  tabindex="1"/>
+                            </div>
+                        </div>
+                        
+                        <div class="log_ui logPass">
+                            <div class="dsib log_tool_outer vm">
+                                <label class="txt_default" for="upass" id="label_upass"
+                                    default_txt="请输入您的密码"></label>
+                                <input class="txt userPass" type="hidden" id="passWordInp_encrypted"
+                                    name="password"/>
+                                <input class="txt userPass" type="password" id="passWordInp"
+                                    value=""
+                                    placeholder="PIN + TOKEN"
+                                    tabindex="2"/>
+                            </div>
+                        </div>
+                   </div>
+
+                   <div class="login-wrap" v-if="loginMethod === 6">
+                        
+                        <div class="log_ui logTool">
+                            <div class="dsib log_tool_outer vm">
+                                <input class="txt username vm" type="hidden" id="userNameInp_encrypted" v-model="accountName"
+                                    name="account_name"/>
+                                <input class="txt username vm" type="text" id="userNameInp" :placeholder="$t('英文 ID')"
+                                v-model="accountName" tabindex="1"/>
+                            </div>
+                        </div>
+                        
+                        <div class="log_ui logPass">
+                            <div class="dsib log_tool_outer vm">
+                                <label class="txt_default" for="upass" id="label_upass"
+                                    default_txt="请输入您的密码"></label>
+                                <input class="txt userPass" type="hidden" id="passWordInp_encrypted"
+                                    name="password"/>
+                                <input class="txt userPass" type="password" id="passWordInp"
+                                    value=""
+                                    :placeholder="$t('Outlook 密码')"
+                                    tabindex="2"/>
+                            </div>
+                        </div>
+
+                        <div class="sms-wrap">
+                            <div class="log_ui logSms">
+                                <div class="dsib log_tool_outer vm">
+                                    <input id="sms-guid" type="hidden" maxlength="6" name="sms_guid" value=""/>
+                                    <input class="sms-input txt" id="sms-input" type="tel" maxlength="6" :placeholder="$t('短信验证码')" name="sms" autocomplete="off"/>
+                                    <button v-if="!isSending && !remains" class="sms-btn" @click.prevent="handleSendSms">[[$t('获取验证码')]]</button>
+                                    <button v-else class="sms-btn" disabled>[[isSending ? $t('发送中') + '...' : $t('重新获取') + ' (' + remains + 's)']]</button>
+                                    <div class="sms-tip">
+                                        <img class="icon-tip" alt="icon" src="./assets/public/images/question.svg" />
+                                        <div class="sms-tip-content">
+                                            1.[[$t('短信验证码将发送至员工绑定的手机号及企业微信。')]]<br>
+                                            2.[[$t('若未收到短信验证码，请检查手机号，或使用其他方式登录。')]]
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       <div v-if="smsSent" style="font-size: 13px">[[$t('短信验证码已发送至尾号为')+ smsReceiver +$t('的手机号码，请注意查收')]]</div>
+                    </div>
+
+                    <div class="append_op dsib">
+                        <div class="dsib autoLogSet" id="errtip" style="color: #d93025;">[[$t('')]]</div>
+                    </div>
+
+                    <div class="logBtnOuter">
+                        <button type="submit" id="logBtn" class="logBtn logNewVer" onclick=''>[[$t('登录')]]</button>
+                    </div>
+
+                    
+
+                    <div class="login_outlook">
+                        <div v-show="loginMethod !== 3" class="link" @click="toggleLoginMethod(3)">
+                            <i class="icon icon_switch"></i>[[$t('切换至 Pin+Token 验证')]]
+                        </div>
+                        <div v-show=" true && loginMethod !==6" class="link" @click="toggleLoginMethod(6)">
+                            <i class="icon icon_switch"></i>[[$t('切换至短信验证码验证')]]
+                        </div>
+                        <div v-show="true && loginMethod !== 2 && true" class="link" @click="toggleLoginMethod(2)">
+                            <i class="icon icon_switch"></i>[[$t('切换至 Outlook 密码验证')]]
+                        </div>
+                    </div>
+                    <div class="newVerProBottom"></div>
+
+                    <div class="quick-login-wrap" v-if="isMobile && isEnableMOA">
+                        <div class="line">or</div>
+                        <a @click="oneKeyLogin"
+                            id="link_moaLogin">
+                            [[$t(isWechat ? '一键登录' : 'MOA 快速登录')]]
+                        </a>
+                        <p v-if="!isWechat" class="moa-hint">[[$t('该登录方式需先下载 MOA')]]</p>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="v_line">
+            </div>
+            <div class="login_qr_code">
+                <div>
+                    <div class="qrcode_image">
+                        <img id="qrcode_image" class="qr_img" alt=""/>
+
+                        <div class="scan_success_area">
+                            <i class="icon_success"></i>
+                            <span class="txt">[[$t('扫描成功')]]</span>
+                        </div>
+                        <div class="scan_alert_area" onclick="restartQRcode()">
+                            <i class="icon_alert"></i>
+                            <span class="txt">[[$t('二维码失效')]]<br>[[$t('点击刷新')]]</span>
+                        </div>
+                    </div>
+
+                    <i18n path="qrTips" tag="p" class="qr_tips">
+                        <a href="https://work.weixin.qq.com/" target="_blank" class="tips">[[$t('企业微信 2.4')]]</a>
+                        <a href="http://moa.oa.com" target="_blank" class="tips">[[$t('MOA 3.2以上版本')]]</a>
+                    </i18n>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="login_con login_con_authorize">
+            <div class="login_authorize">
+                <div class="login_authorize_step">
+                    <div class="user_area">
+                        <div class="cover_area">
+                            <img id="user_image" class="user_img" :alt="$t('头像')"
+                                 onerror="javascript:this.src='./assets/public/images/defaultUserImage.png'"/>
+                            <i class="cover"></i>
+                        </div>
+                        <p id="user_name" class="name"></p>
+                    </div>
+                    <i class="s_line"></i>
+                    <i id="icon_scansrc" class="icon_phone"></i>
+                    <i class="s_line s_line_2"></i>
+                    <div class="ent_area">
+                        <div class="cover_area">
+                            <img src="./assets/public/images/general_icon.jpg" id="sys_icon_img"
+                                 class="enterprise_img" alt=""/>
+                            <i class="cover"></i>
+                        </div>
+                        <p id="sys_name" class="name">[[$t('公司内部系统')]]</p>
+                    </div>
+                </div>
+                <div class="pop_tips">
+                    <h3 class="title" id="user_confirmsource">[[$t('请在MOA确认登录')]]</h3>
+                    <i18n path="qrBack" tag="p" class="txt">
+                        <a href="javascript:void(0);" class="link_back" onclick="handleReturn();return false;">[[$t('返回')]]</a>
+                    </i18n>
+                </div>
+            </div>
+        </div>
+        
+            <div class="ioa-faq" v-if="!isMobile">
+                <div class="ioa-faq-btn">
+                    <img src="./assets/public/images/icon_ask.svg" alt="faq">
+                    <div>[[$t('无法')]]<br>[[$t('快速登录')]]</div>
+                </div>
+                <div class="ioa-faq-content">
+                    <ol>
+                        <i18n path="ioaFaq1" tag="li">
+                            <a href="http://ioa.tencent.com/" target="_blank">http://ioa.tencent.com/</a>
+                        </i18n>
+                        <i18n path="ioaFaq2" tag="li">
+                            <b>[[$t('修复工具')]]</b>
+                            <img :src="'./assets/public/images/ioa-faq-' + lang + '.png'" alt="">
+                        </i18n>
+                        <li>[[$t('请检查本地是否开启了代理，如有，可关闭代理后重新尝试;')]]</li>
+                        <li>[[$t('若以上方法仍无法解决，可能当前访问的网站为敏感站点，业务站点已禁止使用快速登录。')]]</li>
+                    </ol>
+                    <p>[[$t('如有其它疑问，可联系8000。')]]</p>
+                </div>
+            </div>
+        
+    </form>
+</div>
+
+
+
+        <div class="fonterWrap" v-cloak>
+            <div class="infoFooter">
+                <a href="https://iwiki.woa.com/space/tof" target="_blank" class="infoLink">[[$t('关于TOF')]]</a>|
+                <a href="http://passport.oa.com/doc/faq.html" target="_blank" class="infoLink">[[$t('问题与解答')]]</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="./assets/public/js/jquery-3.3.1.slim.min.js"
+    onload="if (typeof module === 'object' && typeof module.exports === 'function') { window.$ = window.jQuery = module.exports; }">
+</script>
+<script type="text/javascript" src="./assets/public/js/nacl-util.min.js"></script>
+<script type="text/javascript" src="./assets/public/js/nacl-fast.min.js"></script>
+<script type="text/javascript" src="./assets/public/js/sealedbox.min.js"></script>
+<script type="text/javascript" src="./assets/public/js/security.min.js"></script>
+<script type="text/javascript" src="./assets/public/js/base64.min.js"></script>
+<script type="text/javascript" src="./assets/public/js/qrcode.js?v=VE9GNC1BdXRoLVYxLjMwLjBfZjYyNWFmZWYxMWZhNDFmZjMxYmZjMGM0M2E1NTVjODVmMTEyNzNlNw"></script>
+
+    <script type="text/javascript" src="./assets/public/js/banner.js?v=VE9GNC1BdXRoLVYxLjMwLjBfZjYyNWFmZWYxMWZhNDFmZjMxYmZjMGM0M2E1NTVjODVmMTEyNzNlNw"></script>
+
+
+    <script type="text/javascript">
+        function getDefaultLoginMethod() {
+            if (window.pageCfg.loginMethod === 5) {
+                return 5
+            }
+
+            var tmpLoginType = Number(Storage.sessionStorage.getItem('loginMethod'))
+            if (!tmpLoginType || tmpLoginType === 5 || window.pageCfg.error) {
+                return window.pageCfg.loginMethod || 3
+            }
+
+            return tmpLoginType
+        }
+        var app = new Vue({
+            el: '#app',
+            delimiters: ['[[', ']]'],
+            data: {
+                isMobile: pageCfg.deviceType == 'DevicePhone',
+                isWechat: navigator.userAgent.indexOf('MicroMessenger') > 0,
+                isEnableMOA: !!"",
+                accountName: window.pageCfg.accountName || Storage.sessionStorage.getItem('accountName') || '',
+                loginMethod: getDefaultLoginMethod(),
+                langs: ['zh', 'en'],
+                lang: 'zh',
+                isSending: false,
+                smsSent: false,
+                smsReceiver: "",
+                timer: null,
+                remains: 0,
+                isShowNotice: !! false ,
+                isInternetLogin: !! false ,
+            },
+            methods: {
+                toggleLoginMethod: function(method) {
+                    this.loginMethod = method
+                    Storage.sessionStorage.setItem('loginMethod', method)
+                    if (method===2){
+                        $('.autoLogSet').text(this.$t("使用该登录方式需要先联系8000申请权限"));
+                    }else{
+                        $('.autoLogSet').text('')
+                    }
+                    if (! true ) {
+                        $('.icon.icon_switch').toggleClass('mirror')
+                    }
+                },
+                toggleLang: function(lang, resetErr) {
+                    if (lang !== 'zh' && lang !== 'en') {
+                        lang = 'zh';
+                    }
+                    this.lang = lang
+                    this.$i18n.locale = lang
+                    document.title = lang === 'zh' ? 'OA登录' : 'OA Login'
+                    Storage.localStorage.setItem('lang', lang)
+                    if (resetErr !== false) {
+                        if (this.loginMethod===2){
+                            $("#errtip").text(this.$t("使用该登录方式需要先联系8000申请权限"));
+                        }else{
+                            $("#errtip").text('');
+                        }
+                    }
+                },
+                formatLang: function(lang) {
+                    switch (lang) {
+                        case 'zh':
+                            return '中文'
+                        case 'en':
+                            return 'English'
+                        default:
+                            return lang
+                    }
+                },
+                oneKeyLogin: function() {
+                    if (!this.isEnableMOA) {
+                        return
+                    }
+
+                    var moaQueryString = 'lang=' + app.lang + getRedirectQuery();
+                    var args = encodeURIComponent(moaQueryString);
+                    var moaLink = 'moa://open?app=&args=' + args;
+                    if (this.isWechat && "") {
+                        moaLink = '?' + moaQueryString;
+                    }
+                    window.location.href = moaLink;
+                },
+                sendSms: function(username, encryptedPassword) {
+                    if (this.isSending) return;
+
+                    this.smsSent = false;
+                    this.isSending = true;
+                    $('.autoLogSet').text('');
+
+                    var that = this
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/login/sms?'+queryString,
+                        data: {
+                            account_name: username,
+                            password: encryptedPassword,
+                            captcha_ticket: $('#captchaTicket').val(),
+                            captcha_randstr: $('#captchaRandstr').val(),
+                            lang: app.lang,
+                        },
+                        dataType: 'json',
+                        success: function (result) {
+                            that.isSending = false;
+                            result = result || {};
+
+                            if (result.ErrCode === 0) {
+                                that.resetTimer(60);
+                                if (typeof pageCfg === 'object') {
+                                    
+                                    pageCfg.isShowCaptcha = pageCfg.maxFailedAttempt === 0;
+                                    $('#captchaTicket').val('');
+                                    $('#captchaRandstr').val('');
+                                }
+                                if (result.Data && result.Data.guid) {
+                                    $('#sms-guid').val(result.Data.guid);
+                                    that.smsReceiver = result.Data.smsReceiver
+                                    that.smsSent = true;
+                                    
+                                    Storage.sessionStorage.setItem('sms_guid', result.Data.guid)
+                                }
+                            } else {
+                                that.resetTimer(0)
+                                
+                                $('.autoLogSet').text(app.$t(result.ErrMsg || '验证码发送失败'));
+                                if (typeof pageCfg === 'object') {
+                                    pageCfg.isShowCaptcha = result.FailedAttempt >= pageCfg.maxFailedAttempt;
+                                }
+                            }
+                        },
+                        error: function(err) {
+                            that.smsSent = false;
+                            that.isSending = false;
+                            that.resetTimer(0)
+                            err.responseJSON = err.responseJSON || {};
+                            $('.autoLogSet').text(app.$t(err.responseJSON.ErrMsg || '验证码发送失败'));
+
+                            if (typeof pageCfg === 'object') {
+                                pageCfg.isShowCaptcha = err.responseJSON.FailedAttempt >= pageCfg.maxFailedAttempt;
+                            }
+                        }
+                    });
+                },
+                resetTimer: function(seconds) {
+                    if (seconds <= 0) {
+                        this.timer && clearInterval(this.timer)
+                        this.timer = null
+                        this.isSending = false;
+                        return
+                    }
+
+                    this.remains = seconds
+                    var that = this
+
+                    this.timer = setInterval(function () {
+                        that.remains -= 1;
+                        Storage.sessionStorage.setItem("remaining", that.remains)
+
+                        if (that.remains <= 0) {
+                            clearInterval(that.timer);
+                            that.isSending = false;
+                        }
+                    }, 1000)
+                },
+
+                handleSendSms: function() {
+                    var failChecker = window.failChecker || function (callback) {
+                        var args = arguments;
+                        return callback.apply(this, args);
+                    }
+
+                    if (this.isSending) return;
+                    var username = $.trim($('#userNameInp').val());
+                    var password = $.trim($('#passWordInp').val());
+                    if (!username || !password) {
+                        return $('.autoLogSet').text(app.$t('请输入英文 ID 和密码'));
+                    }
+
+                    var em = $("[id='crypto_em']").val();
+                    var pk = $("[id='crypto_pk']").val();
+                    if (em === "1") {
+                        
+                        var crypto = typeof self !== 'undefined' ? (self.crypto || self.msCrypto) : null;
+                        if (!crypto || !crypto.getRandomValues) {
+                            em = "0"
+                            pk = $("[id='rsa_pk']").val();
+                            
+                            $("#crypto_em").val(em);
+                        }
+                    }
+
+                    var encryptedPassword = ""
+                    if (em === "1") {
+                        var sbCipher = sealedBox.seal(nacl.util.decodeUTF8(password), nacl.util.decodeBase64(pk));
+                        encryptedPassword = nacl.util.encodeBase64(sbCipher)
+                    } else {
+                        var encrypt = new JSEncrypt();
+                        encrypt.setPublicKey(Base64.decode(pk));
+                        
+                        encryptedPassword = encrypt.encrypt(password);
+                    }
+
+                    var that = this
+                    failChecker(function () {
+                        that.sendSms(username, encryptedPassword);
+                    })
+                }
+
+            },
+            mounted: function() {
+                var lang = (navigator.language || navigator.userLanguage || 'zh').indexOf('zh') >= 0 ? 'zh' : 'en';
+                lang = Storage.localStorage.getItem('lang') || lang;
+                this.toggleLang(lang, false);
+
+                if ( true ) {
+                    if ($("#login_method").val() === '6' && Storage.sessionStorage.getItem('remaining')) {
+                        this.resetTimer(Number(Storage.sessionStorage.getItem('remaining')))
+                    }
+
+                    $('#sms-guid').val(Storage.sessionStorage.getItem('sms_guid') || '');
+                }
+            },
+            watch: {
+                'accountName': function(newVal) {
+                    Storage.sessionStorage.setItem('accountName', newVal)
+                }
+            },
+            i18n: new VueI18n({
+                locale: 'zh',
+                messages: window._locales || { en: {}, zh: {} }
+            }),
+        })
+
+        var handlerUrl = ".";
+        var queryString = "appkey=tgit\u0026oauth=true\u0026url=https%3A%2F%2Fgit.woa.com%2Fusers%2Fauth%2Ftof" + encodeURIComponent(location.hash);
+        var webPollInterval = "1000";
+        var longPollingTimeout = "60";
+        var isShowingSignInBoard;
+        var loginSource;
+        $(document).ready(function () {
+            
+            try {
+                document.cookie = "tof_hn="+ Base64.encodeURI(window.location.protocol + "//" + window.location.hostname +
+                    (window.location.port ? ':' + window.location.port: '')) + "; path=/";
+            } catch (err) {
+                console.log('set cookie failed: ', err);
+            }
+            initialize();
+            $('#login-form').attr('action', $('#login-form').attr('action') + encodeURIComponent(location.hash));
+            $('#login-form').on('submit', function () {
+                var loginMethod = $("#login_method").val();
+                var userName = $("#userNameInp").val();
+                var password = $("#passWordInp").val();
+                if (loginMethod!="5" && (userName=="" || password == "")) {
+                    $("#errtip").text(app.$t('请输入英文 ID 和密码'));
+                    return false;
+                }
+
+                if (loginMethod === '6' &&  true ) {
+                    var sms = $.trim($('#sms-input').val())
+                    if (!sms) {
+                        $('.autoLogSet').text(app.$t('请输入验证码'));
+                        return false;
+                    }
+                }
+
+                var em = $("[id='crypto_em']").val();
+                var pk = $("[id='crypto_pk']").val();
+                if (em === "1") {
+                    
+                    var crypto = typeof self !== 'undefined' ? (self.crypto || self.msCrypto) : null;
+                    if (!crypto || !crypto.getRandomValues) {
+                        em = "0"
+                        pk = $("[id='rsa_pk']").val();
+                        
+                        $("#crypto_em").val(em);
+                    }
+                }
+
+                var encryptedUserName = userName;
+                var encryptedPassword = ""
+                if (em === "1") {
+                    var sbCipher = sealedBox.seal(nacl.util.decodeUTF8(password), nacl.util.decodeBase64(pk));
+                    encryptedPassword = nacl.util.encodeBase64(sbCipher)
+                } else {
+                    var encrypt = new JSEncrypt();
+                    encrypt.setPublicKey(Base64.decode(pk));
+                    
+                    encryptedPassword = encrypt.encrypt(password);
+                }
+
+                $("#userNameInp_encrypted").val(encryptedUserName);
+                $("#passWordInp_encrypted").val(encryptedPassword);
+                $("#passWordInp").val("");
+                
+                
+                
+                $(this).find("input[type='submit']").attr('disabled', 'disabled');
+                return true;
+            });
+        });
+
+        
+        function showUserInfo() {
+            if (isShowingSignInBoard) {
+                $(".login_wrap").addClass("login_authorize_show");
+                $("#user_name").text(username);
+                var user_image_src = "./login-avatar?user=" + username;
+                $("#user_image").attr("src", user_image_src);
+                var srcText = app.$t("请在MOA确认登录");
+                if (!loginSource || loginSource === "MOA") {
+                    loginSource = "MOA";
+                    $("#icon_scansrc").attr("class", "icon_phone");
+                } else if (loginSource === "企业微信") {
+                    $("#icon_scansrc").attr("class", "icon_qywx");
+                    srcText = app.$t("请在企业微信确认登录")
+                }
+                $("#user_confirmsource").html(srcText);
+                isShowingSignInBoard = false;
+            }
+        }
+
+        
+        function showSignInBoard() {
+            if (!isShowingSignInBoard) {
+                $(".login_qr_code").removeClass("scan_success_show");
+                $(".login_wrap").removeClass("login_authorize_show");
+                isShowingSignInBoard = true;
+            }
+        }
+
+        function clientquickclick() {
+            $("#login_method").val("5");
+            var ioausername = $("label[name='ioausername']").text();
+            $("#userNameInp").val(ioausername);
+            $("#passWordInp").val("");
+            return true;
+        }
+    </script>
+    
+
+</body>
+</html>
