@@ -1,3 +1,9 @@
+---
+tags: [ROS2, Isaac, Lerobot]
+date: 2025-09-26
+picture: aws-ros2-isaac-sim-blog.assets/cover.png
+---
+
 # 云端机器人研发：基于 AWS 实现 ROS 2 设备与 Isaac Sim 的 Lerobot 仿真及数据流
 
 ## 背景
